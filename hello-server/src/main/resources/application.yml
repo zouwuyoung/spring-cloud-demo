@@ -1,0 +1,24 @@
+server:
+  port: 20000
+
+spring:
+  application:
+    name: hello-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:10000/eureka
+
+security:
+  oauth2:
+    resource:
+      id: resource
+      user-info-uri: http://localhost:10001/
+      prefer-token-info: false
+    client:
+      accessTokenUri: http://localhost:10002/oauth/token
+      userAuthorizationUri: http://localhost:10002/oauth/authorize
+      clientId: resource
+      clientSecret: passwordforauthserver
+

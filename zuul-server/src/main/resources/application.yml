@@ -1,0 +1,28 @@
+server:
+  port: 10001
+
+spring:
+  application:
+    name: api-gateway
+
+zuul:
+  routes:
+    api-test:
+      path: /api-test/**
+      serviceId: hello-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:10000/eureka/
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      access-token-uri: http://localhost:10002/oauth/token ##网关的地址
+      user-authorization-uri: http://localhost:10002/oauth/authorize
+    resource:
+      user-info-uri:  http://10.10.8.2:9030/uaa/user
+      prefer-token-info: false
