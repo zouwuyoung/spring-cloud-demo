@@ -13,12 +13,12 @@ eureka:
 security:
   oauth2:
     resource:
-      id: resource
-      user-info-uri: http://localhost:10001/
+      user-info-uri:  http://localhost:10002/user
       prefer-token-info: false
     client:
       accessTokenUri: http://localhost:10002/oauth/token
       userAuthorizationUri: http://localhost:10002/oauth/authorize
-      clientId: resource
-      clientSecret: passwordforauthserver
+      clientId: hello
+      clientSecret: hello-secret
+      scope: test
 

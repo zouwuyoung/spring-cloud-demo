@@ -21,8 +21,10 @@ security:
     enabled: false
   oauth2:
     client:
-      access-token-uri: http://localhost:10002/oauth/token ##网关的地址
+      client-id: zuul
+      client-secret: zuul-secret
+      access-token-uri: http://localhost:10002/oauth/token
       user-authorization-uri: http://localhost:10002/oauth/authorize
     resource:
-      user-info-uri:  http://10.10.8.2:9030/uaa/user
+      user-info-uri:  http://localhost:10002/user
       prefer-token-info: false

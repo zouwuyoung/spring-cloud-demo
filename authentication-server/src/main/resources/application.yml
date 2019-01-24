@@ -2,6 +2,8 @@ server:
   port: 10002
 
 spring:
+  application:
+    name: authentication-service
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -14,3 +16,8 @@ spring:
       initial-size: 10
       validation-query: SELECT 1
       connection-properties: characterEncoding=utf8
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka

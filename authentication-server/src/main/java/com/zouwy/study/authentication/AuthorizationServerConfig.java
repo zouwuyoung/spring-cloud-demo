@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -38,7 +39,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 //    @Autowired
 //    private RedisConnectionFactory redisConnectionFactory;
-//
+
 //    @Bean
 //    RedisTokenStore redisTokenStore(){
 //        return new RedisTokenStore(redisConnectionFactory);
@@ -57,8 +58,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetails());
+//        clients.withClientDetails(clientDetails());
+        clients.inMemory()
+                .withClient("hello")
+                .secret("hello-secret")
+                .redirectUris("http://xu-xm-pc.centit.com:20000/login")
+                .authorizedGrantTypes("authorization_code", "refresh_token")
+                .scopes("test")
+                .autoApprove(true)
+                .and()
+                .withClient("zuul")
+                .secret("zuul-secret")
+                .redirectUris("http://localhost:10001/api-test/hello")
+                .authorizedGrantTypes("authorization_code", "refresh_token")
+                .scopes("test")
+                .autoApprove(true);
     }
+
     @Bean
     public ClientDetailsService clientDetails() {
 //        return new JdbcClientDetailsService(dataSource);
@@ -66,10 +82,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore())
+        endpoints
+                .tokenStore(tokenStore())
                 .userDetailsService(userDetailsService)
                 .authenticationManager(authenticationManager);
-        endpoints.tokenServices(defaultTokenServices());
+//        endpoints.tokenServices(defaultTokenServices());
     }
 
     /**
